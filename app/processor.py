@@ -12,7 +12,7 @@ def calculate_points(receipt):
         pts+=50
     
     #multiple of 0.25
-    if cents in ['25','50','75']:
+    if cents in ['25','50','75','00']:
         pts+=25
 
     #every two items
@@ -36,7 +36,7 @@ def calculate_points(receipt):
     #purchase time
     try:
         purchase_hr = receipt.purchaseTime.split(':')[0]
-        if purchase_hr == "13" or purchase_hr == "14":
+        if purchase_hr == "14" or purchase_hr == "15":
             pts+=10
     except (IndexError, ValueError):
         pass
