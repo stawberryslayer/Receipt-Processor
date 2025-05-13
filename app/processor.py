@@ -22,21 +22,21 @@ def calculate_points(receipt):
     #item description is a multiple of 3
     items = receipt.items
     for item in items:
-        if item['shortDescription'].strip() % 3==0:
-            pts += math.ceil(item['price'] * 0.2)
+        if len(item.shortDescription.strip()) % 3==0:
+            pts += math.ceil(float(item.price) * 0.2)
         
     #date
     try:
-        purchase_date = receipt["purchaseDate"].split('-')[-1]
-        if purchase_date % 2 ==1:
+        purchase_date = receipt.purchaseDate.split('-')[-1]
+        if int(purchase_date) % 2 == 1:
             pts+=6
     except (IndexError, ValueError):
         pass
 
     #purchase time
     try:
-        purchase_hr = receipt["purchaseTime"].split(':')[0]
-        if purchase_hr == 13 or purchase_hr == 14:
+        purchase_hr = receipt.purchaseTime.split(':')[0]
+        if purchase_hr == "13" or purchase_hr == "14":
             pts+=10
     except (IndexError, ValueError):
         pass
