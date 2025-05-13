@@ -1,6 +1,7 @@
 # Receipt-Processor
 
 ## Project structure
+```
 receipt-processor/
 ├── app/
 │   ├── main.py
@@ -8,6 +9,7 @@ receipt-processor/
 ├── requirements.txt
 ├── Dockerfile
 └── README.md
+```
 
 ## Get Started
 ```bash
