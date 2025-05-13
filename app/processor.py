@@ -1,4 +1,5 @@
 import math
+from fastapi import HTTPException
 def calculate_points(receipt):
     pts = 0
     #points for retailer name(character, not ws or special char)
@@ -27,19 +28,25 @@ def calculate_points(receipt):
         
     #date
     try:
-        purchase_date = receipt.purchaseDate.split('-')[-1]
-        if int(purchase_date) % 2 == 1:
+        purchase_date = receipt.purchaseDate.split('-')
+        if len(purchase_date)!= 3:
+            raise ValueError("Invalid date format")
+        if int(purchase_date[-1]) % 2 == 1:
             pts+=6
     except (IndexError, ValueError):
-        pass
+       raise HTTPException(status_code=400, detail="The receipt is invalid.")
+
 
     #purchase time
     try:
-        purchase_hr = receipt.purchaseTime.split(':')[0]
-        if purchase_hr == "14" or purchase_hr == "15":
+        purchase_time = receipt.purchaseTime.split(':')
+        if len(purchase_time)!= 2:
+            raise ValueError("Invalid time format")
+        if purchase_time[0] == "14" or purchase_time[0]== "15":
             pts+=10
     except (IndexError, ValueError):
-        pass
+        raise HTTPException(status_code=400, detail="The receipt is invalid.")
+
 
 
     return pts
