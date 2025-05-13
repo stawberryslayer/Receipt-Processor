@@ -2,12 +2,12 @@ import math
 def calculate_points(receipt):
     pts = 0
     #points for retailer name(character, not ws or special char)
-    retailer = receipt.get("retailer", "")
-    pts += sum(c.isalnum() for c in retailer)
+    
+    pts += sum(c.isalnum() for c in receipt.retailer)
     
 
     #round dollar amount
-    cents = receipt.get("total", "00.00").split('.')[-1]
+    cents = receipt.total.split('.')[-1]
     if cents =='00':
         pts+=50
     
@@ -16,11 +16,11 @@ def calculate_points(receipt):
         pts+=25
 
     #every two items
-    num_items = len(receipt.get("items", []))
+    num_items = len(receipt.items)
     pts += (num_items//2)*5
 
     #item description is a multiple of 3
-    items = receipt.get("items", [])
+    items = receipt.items
     for item in items:
         if item['shortDescription'].strip() % 3==0:
             pts += math.ceil(item['price'] * 0.2)
